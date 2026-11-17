@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PrintControls from '../../components/PrintControls.astro';
+import AudienceOverview from '../../components/AudienceOverview.astro';
 import { transversePages, extraEs, extraEn } from '../../data/transverse';
 
 export function getStaticPaths() {
@@ -58,6 +59,9 @@ const printable = slug === 'diario' || slug === 'tarjeta-medica';
   <h1>{titulo}</h1>
   {printable && <PrintControls lang="es" />}
   {text && <p>{text}</p>}
+  {(slug === 'pacientes' || slug === 'medicos') && (
+    <AudienceOverview lang="es" audience={slug === 'pacientes' ? 'patients' : 'clinicians'} />
+  )}
   {slug === 'diario' && (
     <section aria-labelledby="diario-title">
       <h2 id="diario-title">Registro imprimible</h2>

@@ -1,0 +1,186 @@
+---
+interface Props {
+  lang: 'es' | 'en';
+  audience: 'patients' | 'clinicians';
+}
+
+const { lang, audience } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const content = {
+  patients: {
+    intro: {
+      es: 'Información educativa para entender el tema, preparar una consulta y encontrar recursos. No confirma un diagnóstico ni reemplaza la atención de un profesional.',
+      en: 'Educational information to understand the topic, prepare for an appointment and find resources. It does not confirm a diagnosis or replace professional care.',
+    },
+    sectionTitle: { es: 'Explorar recursos', en: 'Explore resources' },
+    causesLabel: {
+      es: 'Ver todas las causas y sus fichas para pacientes',
+      en: 'Browse all causes and their patient guides',
+    },
+    causesPath: { es: 'es/causas/', en: 'en/causes/' },
+    resources: [
+      {
+        slugEs: 'que-es',
+        slugEn: 'what-is',
+        title: {
+          es: 'Entender la hipoglucemia reactiva',
+          en: 'Understanding reactive hypoglycemia',
+        },
+        description: {
+          es: 'Conozca qué significa y por qué los síntomas por sí solos no la confirman.',
+          en: 'Learn what it means and why symptoms alone do not confirm it.',
+        },
+      },
+      {
+        slugEs: 'diagnostico',
+        slugEn: 'diagnosis',
+        title: { es: 'Cómo se diagnostica', en: 'How it is diagnosed' },
+        description: {
+          es: 'Revise cómo se evalúan los síntomas y la glucosa en conjunto.',
+          en: 'Review how symptoms and glucose are assessed together.',
+        },
+      },
+      {
+        slugEs: 'orientador',
+        slugEn: 'cause-finder',
+        title: { es: 'Orientador educativo', en: 'Educational guide' },
+        description: {
+          es: 'Organice preguntas para conversar con su profesional de salud.',
+          en: 'Organize questions to discuss with your healthcare professional.',
+        },
+      },
+      {
+        slugEs: 'episodio-agudo',
+        slugEn: 'acute-episode',
+        title: { es: 'Ante un episodio agudo', en: 'During an acute episode' },
+        description: {
+          es: 'Consulte información general sobre seguridad y cuándo buscar ayuda urgente.',
+          en: 'Find general information on safety and when to seek emergency help.',
+        },
+      },
+      {
+        slugEs: 'que-llevar-consulta',
+        slugEn: 'prepare-for-appointment',
+        title: { es: 'Preparar la consulta', en: 'Prepare for an appointment' },
+        description: {
+          es: 'Anote qué información puede ser útil llevar a su equipo médico.',
+          en: 'See what information may be useful to bring to your care team.',
+        },
+      },
+      {
+        slugEs: 'diario',
+        slugEn: 'glucose-symptom-diary',
+        title: { es: 'Diario de glucosa y síntomas', en: 'Glucose and symptom diary' },
+        description: {
+          es: 'Use el registro imprimible para organizar observaciones.',
+          en: 'Use the printable record to organize observations.',
+        },
+      },
+      {
+        slugEs: 'faq',
+        slugEn: 'faq',
+        title: { es: 'Preguntas frecuentes', en: 'Frequently asked questions' },
+        description: {
+          es: 'Respuestas breves a dudas comunes.',
+          en: 'Brief answers to common questions.',
+        },
+      },
+    ],
+  },
+  clinicians: {
+    intro: {
+      es: 'Acceso a recursos educativos y fichas clínicas con fuentes. Las fichas están en borrador y pendientes de revisión médica; contraste la información con guías y protocolos locales.',
+      en: 'Access educational resources and sourced clinical records. Records are drafts pending medical review; check information against local guidelines and protocols.',
+    },
+    sectionTitle: { es: 'Recursos para la práctica clínica', en: 'Clinical resources' },
+    causesLabel: {
+      es: 'Explorar todas las causas y sus fichas para médicos',
+      en: 'Browse all causes and their clinician records',
+    },
+    causesPath: { es: 'es/causas/', en: 'en/causes/' },
+    resources: [
+      {
+        slugEs: 'diagnostico',
+        slugEn: 'diagnosis',
+        title: { es: 'Evaluación diagnóstica', en: 'Diagnostic evaluation' },
+        description: {
+          es: 'Repase documentación clínica, pruebas y diagnóstico diferencial.',
+          en: 'Review clinical documentation, testing and differential diagnosis.',
+        },
+      },
+      {
+        slugEs: 'algoritmo-diagnostico',
+        slugEn: 'diagnostic-algorithm',
+        title: { es: 'Algoritmo diagnóstico', en: 'Diagnostic algorithm' },
+        description: {
+          es: 'Consulte los pasos del algoritmo y su alternativa en texto.',
+          en: 'Review the algorithm steps and its text alternative.',
+        },
+      },
+      {
+        slugEs: 'guia-atencion-primaria',
+        slugEn: 'primary-care-guide',
+        title: { es: 'Guía para atención primaria', en: 'Primary care guide' },
+        description: {
+          es: 'Acceda a una síntesis inicial para atención primaria.',
+          en: 'Access an initial summary for primary care.',
+        },
+      },
+      {
+        slugEs: 'tabla-comparativa-causas',
+        slugEn: 'cause-comparison-table',
+        title: { es: 'Comparar causas', en: 'Compare causes' },
+        description: {
+          es: 'Compare temporalidad, mecanismos y estudios clave.',
+          en: 'Compare timing, mechanisms and key studies.',
+        },
+      },
+      {
+        slugEs: 'metodologia',
+        slugEn: 'methodology',
+        title: { es: 'Metodología y evidencia', en: 'Methodology and evidence' },
+        description: {
+          es: 'Revise los criterios de selección de fuentes y clasificación de evidencia.',
+          en: 'Review source selection and evidence classification criteria.',
+        },
+      },
+      {
+        slugEs: 'equipo-revisores',
+        slugEn: 'reviewers',
+        title: { es: 'Revisión médica', en: 'Medical review' },
+        description: {
+          es: 'Consulte el estado editorial y la política para identificar revisiones.',
+          en: 'Review editorial status and the policy for documenting reviews.',
+        },
+      },
+      {
+        slugEs: 'biblioteca',
+        slugEn: 'library',
+        title: { es: 'Biblioteca de guías y artículos', en: 'Guides and article library' },
+        description: {
+          es: 'Encuentre orientación sobre evaluación de fuentes clínicas.',
+          en: 'Find guidance on evaluating clinical sources.',
+        },
+      },
+    ],
+  },
+} as const;
+
+const page = content[audience];
+---
+
+<section class="audience-overview">
+  <p>{page.intro[lang]}</p>
+  <h2>{page.sectionTitle[lang]}</h2>
+  <div class="quick-links">
+    {page.resources.map((resource) => (
+      <a class="card" href={`${base}${lang}/${lang === 'es' ? resource.slugEs : resource.slugEn}/`}>
+        <strong>{resource.title[lang]}</strong>
+        <p>{resource.description[lang]}</p>
+      </a>
+    ))}
+  </div>
+  <p>
+    <a href={`${base}${page.causesPath[lang]}`}>{page.causesLabel[lang]}</a>
+  </p>
+</section>
