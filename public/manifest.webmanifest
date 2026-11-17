@@ -1,0 +1,10 @@
+{
+  "name": "hYglY",
+  "short_name": "hYglY",
+  "description": "Reactive hypoglycemia database",
+  "lang": "es",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f7f9f8",
+  "theme_color": "#18364d"
+}

@@ -1,0 +1,324 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { groups } from '../../../data/groups';
+
+export function getStaticPaths() {
+  return groups.map((group) => ({ params: { group: group.id }, props: { title: group.en } }));
+}
+interface Props {
+  title: string;
+}
+const { group } = Astro.params;
+const { title } = Astro.props;
+---
+
+<BaseLayout
+  title={title}
+  description={`Causes in the ${title} group.`}
+  lang="en"
+  alternatePath={`/causas/${group}/`}
+>
+  <nav aria-label="Breadcrumb">
+    <a href={import.meta.env.BASE_URL + 'en/'}>Home</a> /{' '}
+    <a href={import.meta.env.BASE_URL + 'en/causes/'}>Causes</a> / {title}
+  </nav>
+  <h1>{title}</h1>
+  {group === 'hiperinsulinismo-no-tumoral' && (
+    <section aria-label="Causes in this group">
+      <ul>
+        <li>
+          <a href={`${import.meta.env.BASE_URL}en/causes/niphs/`}>NIPHS</a>
+        </li>
+        <li>
+          <a href={`${import.meta.env.BASE_URL}en/causes/post-bariatrica/`}>
+            Post-bariatric hypoglycemia
+          </a>
+        </li>
+        <li>
+          <a href={`${import.meta.env.BASE_URL}en/causes/dumping-cirugia-gastrica/`}>
+            Dumping syndrome
+          </a>
+        </li>
+        <li>
+          <a href={`${import.meta.env.BASE_URL}en/causes/hiperinsulinismo-genetico-tardio/`}>
+            Late-onset genetic hyperinsulinism
+          </a>
+        </li>
+        <li>
+          <a href={`${import.meta.env.BASE_URL}en/causes/hiperinsulinismo-post-trasplante/`}>
+            Post-transplant hyperinsulinism
+          </a>
+        </li>
+      </ul>
+    </section>
+  )}
+  {group === 'idiopatica-funcional' && (
+    <section aria-label="Causes in this group">
+      <ul>
+        <li>
+          <a href={`${import.meta.env.BASE_URL}en/causes/postprandial-idiopatica/`}>
+            Idiopathic postprandial hypoglycemia
+          </a>
+        </li>
+        <li>
+          <a href={`${import.meta.env.BASE_URL}en/causes/funcional/`}>Functional hypoglycemia</a>
+        </li>
+        <li>
+          <a href={`${import.meta.env.BASE_URL}en/causes/hipersensibilidad-a-caida-de-glucosa/`}>
+            Hypersensitivity to a glucose drop
+          </a>
+        </li>
+      </ul>
+    </section>
+  )}
+  {group === 'resistencia-insulina' && (
+    <section aria-label="Causes in this group">
+      <ul>
+        <li>
+          <a href={`${import.meta.env.BASE_URL}en/causes/prediabetes/`}>Prediabetes</a>
+        </li>
+        <li>
+          <a href={`${import.meta.env.BASE_URL}en/causes/dm2-temprana/`}>
+            Early type 2 diabetes hypoglycemia
+          </a>
+        </li>
+        <li>
+          <a href={`${import.meta.env.BASE_URL}en/causes/sindrome-metabolico/`}>
+            Metabolic syndrome
+          </a>
+        </li>
+        <li>
+          <a href={`${import.meta.env.BASE_URL}en/causes/sop/`}>Polycystic ovary syndrome</a>
+        </li>
+        <li>
+          <a href={`${import.meta.env.BASE_URL}en/causes/obesidad/`}>Obesity</a>
+        </li>
+        <li>
+          <a href={`${import.meta.env.BASE_URL}en/causes/higado-graso-metabolico/`}>
+            Metabolic dysfunction-associated steatotic liver disease
+          </a>
+        </li>
+        <li>
+          <a href={`${import.meta.env.BASE_URL}en/causes/diabetes-tratada-desajuste/`}>
+            Mis-timed diabetes treatment
+          </a>
+        </li>
+        <li>
+          <a href={`${import.meta.env.BASE_URL}en/causes/fibrosis-quistica-diabetes/`}>
+            Hypoglycemia in cystic fibrosis-related diabetes
+          </a>
+        </li>
+      </ul>
+    </section>
+  )}
+  {group === 'autoinmune' && (
+    <section aria-label="Causes in this group">
+      <h2>Anti-insulin antibodies</h2>
+      <ul>
+        <li>
+          <a href={`${import.meta.env.BASE_URL}en/causes/sia-hirata/`}>
+            Hirata autoimmune insulin syndrome
+          </a>
+        </li>
+      </ul>
+      <h2>Anti-insulin receptor antibodies</h2>
+      <ul>
+        <li>
+          <a href={`${import.meta.env.BASE_URL}en/causes/resistencia-insulina-tipo-b/`}>
+            Type B insulin resistance
+          </a>
+        </li>
+      </ul>
+      <h2>Polyglandular and other endocrine disease</h2>
+      <ul>
+        <li>
+          <a href={`${import.meta.env.BASE_URL}en/causes/sindromes-poliglandulares-autoinmunes/`}>
+            Autoimmune polyglandular syndromes
+          </a>
+        </li>
+        <li>
+          <a href={`${import.meta.env.BASE_URL}en/causes/addison-autoinmune/`}>
+            Autoimmune adrenal insufficiency
+          </a>
+        </li>
+        <li>
+          <a href={`${import.meta.env.BASE_URL}en/causes/hipofisitis-autoinmune/`}>
+            Autoimmune hypophysitis
+          </a>
+        </li>
+        <li>
+          <a href={`${import.meta.env.BASE_URL}en/causes/hashimoto/`}>Hashimoto thyroiditis</a>
+        </li>
+        <li>
+          <a href={`${import.meta.env.BASE_URL}en/causes/celiaquia/`}>Celiac disease</a>
+        </li>
+        <li>
+          <a href={`${import.meta.env.BASE_URL}en/causes/otras-autoinmunes/`}>
+            Other autoimmune endocrine causes
+          </a>
+        </li>
+      </ul>
+    </section>
+  )}
+  {group === 'endocrinas' && (
+    <section aria-label="Causes in this group">
+      <ul>
+        <li>
+          <a href={`${import.meta.env.BASE_URL}en/causes/insuficiencia-suprarrenal/`}>
+            Adrenal insufficiency
+          </a>
+        </li>
+        <li>
+          <a href={`${import.meta.env.BASE_URL}en/causes/hipopituitarismo/`}>Hypopituitarism</a>
+        </li>
+        <li>
+          <a href={`${import.meta.env.BASE_URL}en/causes/deficit-hormona-crecimiento/`}>
+            Growth hormone deficiency
+          </a>
+        </li>
+        <li>
+          <a href={`${import.meta.env.BASE_URL}en/causes/deficit-glucagon-catecolaminas/`}>
+            Glucagon and catecholamine deficiency
+          </a>
+        </li>
+        <li>
+          <a href={`${import.meta.env.BASE_URL}en/causes/hipotiroidismo-grave/`}>
+            Severe hypothyroidism
+          </a>
+        </li>
+      </ul>
+    </section>
+  )}
+  {group === 'metabolicas-congenitas' && (
+    <section aria-label="Causes in this group">
+      <ul>
+        <li>
+          <a href={`${import.meta.env.BASE_URL}en/causes/fructosa-hereditaria/`}>
+            Hereditary fructose intolerance
+          </a>
+        </li>
+        <li>
+          <a href={`${import.meta.env.BASE_URL}en/causes/galactosemia/`}>Galactosemia</a>
+        </li>
+        <li>
+          <a href={`${import.meta.env.BASE_URL}en/causes/glucogenosis/`}>
+            Glycogen storage disease
+          </a>
+        </li>
+        <li>
+          <a href={`${import.meta.env.BASE_URL}en/causes/fructosa-1-6-bisfosfatasa/`}>
+            Fructose-1,6-bisphosphatase deficiency
+          </a>
+        </li>
+        <li>
+          <a href={`${import.meta.env.BASE_URL}en/causes/sensibilidad-a-leucina/`}>
+            Leucine sensitivity
+          </a>
+        </li>
+        <li>
+          <a href={`${import.meta.env.BASE_URL}en/causes/defectos-oxidacion-acidos-grasos/`}>
+            Fatty acid oxidation defects
+          </a>
+        </li>
+        <li>
+          <a href={`${import.meta.env.BASE_URL}en/causes/otros-errores-congenitos/`}>
+            Other inherited metabolic disorders
+          </a>
+        </li>
+      </ul>
+    </section>
+  )}
+  {group === 'tumores' && (
+    <section aria-label="Causes in this group">
+      <ul>
+        <li>
+          <a href={`${import.meta.env.BASE_URL}en/causes/insulinoma/`}>Insulinoma</a>
+        </li>
+        <li>
+          <a href={`${import.meta.env.BASE_URL}en/causes/tumores-igf2/`}>IGF-2-producing tumors</a>
+        </li>
+        <li>
+          <a href={`${import.meta.env.BASE_URL}en/causes/hiperplasia-celulas-beta/`}>
+            Beta-cell hyperplasia
+          </a>
+        </li>
+        <li>
+          <a href={`${import.meta.env.BASE_URL}en/causes/otros-tumores-neuroendocrinos/`}>
+            Other neuroendocrine tumors
+          </a>
+        </li>
+      </ul>
+    </section>
+  )}
+  {group === 'farmacos-toxicose' && (
+    <section aria-label="Causes in this group">
+      <ul>
+        <li>
+          <a href={`${import.meta.env.BASE_URL}en/causes/sulfonilureas/`}>Sulfonylureas</a>
+        </li>
+        <li>
+          <a href={`${import.meta.env.BASE_URL}en/causes/meglitinidas/`}>Meglitinides</a>
+        </li>
+        <li>
+          <a href={`${import.meta.env.BASE_URL}en/causes/alcohol/`}>Alcohol</a>
+        </li>
+        <li>
+          <a href={`${import.meta.env.BASE_URL}en/causes/quinina/`}>Quinine</a>
+        </li>
+        <li>
+          <a href={`${import.meta.env.BASE_URL}en/causes/pentamidina/`}>Pentamidine</a>
+        </li>
+        <li>
+          <a href={`${import.meta.env.BASE_URL}en/causes/insulina-exogena/`}>Exogenous insulin</a>
+        </li>
+        <li>
+          <a href={`${import.meta.env.BASE_URL}en/causes/factitia/`}>
+            Factitious or induced hypoglycemia
+          </a>
+        </li>
+        <li>
+          <a href={`${import.meta.env.BASE_URL}en/causes/otros-farmacos/`}>
+            Other medicines and toxins
+          </a>
+        </li>
+      </ul>
+    </section>
+  )}
+  {group === 'otras-diferencial' && (
+    <section aria-label="Causes in this group">
+      <ul>
+        <li>
+          <a href={`${import.meta.env.BASE_URL}en/causes/enfermedad-hepatica-renal/`}>
+            Liver or kidney disease
+          </a>
+        </li>
+        <li>
+          <a href={`${import.meta.env.BASE_URL}en/causes/sepsis-enfermedad-critica/`}>
+            Sepsis and critical illness
+          </a>
+        </li>
+        <li>
+          <a href={`${import.meta.env.BASE_URL}en/causes/insuficiencia-cardiaca/`}>Heart failure</a>
+        </li>
+        <li>
+          <a href={`${import.meta.env.BASE_URL}en/causes/desnutricion/`}>Malnutrition</a>
+        </li>
+        <li>
+          <a href={`${import.meta.env.BASE_URL}en/causes/trastornos-alimentarios/`}>
+            Eating disorders
+          </a>
+        </li>
+        <li>
+          <a href={`${import.meta.env.BASE_URL}en/causes/condiciones-que-imitan-sintomas/`}>
+            Conditions mimicking hypoglycemia
+          </a>
+        </li>
+      </ul>
+    </section>
+  )}
+  {group !== 'hiperinsulinismo-no-tumoral' &&
+    group !== 'idiopatica-funcional' &&
+    group !== 'resistencia-insulina' &&
+    group !== 'autoinmune' &&
+    group !== 'endocrinas' && <p>This group is prepared for clinical records in later phases.</p>}
+</BaseLayout>

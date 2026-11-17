@@ -1,0 +1,19 @@
+---
+interface Props {
+  lang: 'es' | 'en';
+}
+const { lang } = Astro.props;
+---
+
+<div class="print-controls" aria-label={lang === 'es' ? 'Acciones de impresión' : 'Print actions'}>
+  <button type="button" data-print>
+    {lang === 'es' ? 'Imprimir' : 'Print'}
+  </button>
+  <button type="button" data-save-pdf>
+    {lang === 'es' ? 'Descargar PDF' : 'Download PDF'}
+  </button>
+</div>
+<script is:inline>
+  const printButtons = document.querySelectorAll('[data-print], [data-save-pdf]');
+  printButtons.forEach((button) => button.addEventListener('click', () => window.print()));
+</script>

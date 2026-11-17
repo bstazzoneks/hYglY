@@ -1,0 +1,71 @@
+---
+import { getEntry, render } from 'astro:content';
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import { phase4Causes } from '../../../../data/phase4-causes';
+import { autoimmuneCauses } from '../../../../data/autoimmune-causes';
+import { endocrineCauses } from '../../../../data/endocrine-causes';
+import { metabolicCauses } from '../../../../data/metabolic-causes';
+import { tumorCauses } from '../../../../data/tumor-causes';
+import { drugCauses } from '../../../../data/drug-causes';
+import { otherCauses } from '../../../../data/other-causes';
+
+export function getStaticPaths() {
+  const existing = [
+    { params: { cause: 'niphs' } },
+    { params: { cause: 'post-bariatrica' } },
+    { params: { cause: 'dumping-cirugia-gastrica' } },
+    { params: { cause: 'hiperinsulinismo-genetico-tardio' } },
+    { params: { cause: 'hiperinsulinismo-post-trasplante' } },
+    { params: { cause: 'postprandial-idiopatica' } },
+    { params: { cause: 'funcional' } },
+    { params: { cause: 'hipersensibilidad-a-caida-de-glucosa' } },
+  ];
+  return [
+    ...existing,
+    ...phase4Causes.map((cause) => ({ params: { cause: cause.slug } })),
+    ...autoimmuneCauses.map((cause) => ({ params: { cause: cause.slug } })),
+    ...endocrineCauses.map((cause) => ({ params: { cause: cause.slug } })),
+    ...metabolicCauses.map((cause) => ({ params: { cause: cause.slug } })),
+    ...tumorCauses.map((cause) => ({ params: { cause: cause.slug } })),
+    ...drugCauses.map((cause) => ({ params: { cause: cause.slug } })),
+    ...otherCauses.map((cause) => ({ params: { cause: cause.slug } })),
+  ];
+}
+
+const { cause } = Astro.params;
+const entry = await getEntry('causas', `${cause}/es/medico`);
+if (!entry) throw new Error(`Missing clinician cause entry: ${cause}/es/medico`);
+const { Content, headings } = await render(entry);
+const base = import.meta.env.BASE_URL;
+---
+
+<BaseLayout
+  title={entry.data.titulo}
+  description={entry.data.resumen}
+  lang="es"
+  alternatePath={`/causes/${cause}/clinician/`}
+>
+  <nav aria-label="Migas de pan">
+    <a href={`${base}es/`}>Inicio</a> /<a href={`${base}es/causas/`}>Causas</a> /
+    <a href={`${base}es/causas/${cause}/`}>{entry.data.titulo}</a> / Médico
+  </nav>
+  <div class="audience-actions">
+    <a href={`${base}es/causas/${cause}/paciente/`}>Versión para pacientes</a>
+  </div>
+  {headings.length > 3 && (
+    <details class="table-of-contents">
+      <summary>Tabla de contenidos</summary>
+      <ol>
+        {headings.map((heading) => (
+          <li>
+            <a href={`#${heading.slug}`}>{heading.text}</a>
+          </li>
+        ))}
+      </ol>
+    </details>
+  )}
+  <article>
+    <h1>{entry.data.titulo}</h1>
+    <Content />
+  </article>
+</BaseLayout>

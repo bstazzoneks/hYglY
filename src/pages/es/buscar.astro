@@ -1,0 +1,29 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Buscar"
+  description="Busque información en hYglY."
+  lang="es"
+  alternatePath="/search/"
+  dataPagefind={false}
+>
+  <h1>Buscar en hYglY</h1>
+  <div id="search"></div>
+  <noscript>Active JavaScript para usar el buscador Pagefind.</noscript>
+  <link rel="stylesheet" href={`${import.meta.env.BASE_URL}pagefind/pagefind-ui.css`} />
+  <script is:inline define:vars={{ base: import.meta.env.BASE_URL }}>
+    const script = document.createElement('script');
+    script.src = `${base}pagefind/pagefind-ui.js`;
+    script.onload = () => {
+      new PagefindUI({
+        element: '#search',
+        showSubResults: true,
+        showImages: false,
+        translations: { placeholder: 'Buscar' },
+      });
+    };
+    document.head.appendChild(script);
+  </script>
+</BaseLayout>

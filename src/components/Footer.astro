@@ -1,0 +1,27 @@
+---
+interface Props {
+  lang: 'es' | 'en';
+}
+const { lang } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const routes =
+  lang === 'es'
+    ? { legal: 'aviso-legal', methodology: 'metodologia', contact: 'contacto' }
+    : { legal: 'legal-notice', methodology: 'methodology', contact: 'contact' };
+---
+
+<footer class="site-footer">
+  <div>
+    <strong>hYglY</strong>
+    <span>
+      {lang === 'es' ? 'Base de datos de hipoglucemia reactiva' : 'Reactive hypoglycemia database'}
+    </span>
+  </div>
+  <nav aria-label={lang === 'es' ? 'Información legal' : 'Legal information'}>
+    <a href={`${base}${lang}/${routes.legal}/`}>{lang === 'es' ? 'Aviso legal' : 'Legal notice'}</a>
+    <a href={`${base}${lang}/${routes.methodology}/`}>
+      {lang === 'es' ? 'Metodología' : 'Methodology'}
+    </a>
+    <a href={`${base}${lang}/${routes.contact}/`}>{lang === 'es' ? 'Contacto' : 'Contact'}</a>
+  </nav>
+</footer>

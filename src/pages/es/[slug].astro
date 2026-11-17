@@ -1,0 +1,130 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PrintControls from '../../components/PrintControls.astro';
+import { transversePages, extraEs, extraEn } from '../../data/transverse';
+
+export function getStaticPaths() {
+  const legacy = [
+    ['pacientes', 'Pacientes'],
+    ['medicos', 'Médicos'],
+    ['recursos', 'Recursos'],
+  ] as const;
+  const all = [
+    ...transversePages.map((page) => ({ slug: page.slugEs, title: page.titleEs })),
+    ...extraEs,
+    ...legacy.map(([slug, title]) => ({ slug, title })),
+  ];
+  return all.map((page) => {
+    const transverse = transversePages.find((item) => item.slugEs === page.slug);
+    const extraIndex = extraEs.findIndex((item) => item.slug === page.slug);
+    const legacyMap: Record<string, string> = {
+      pacientes: 'patients',
+      medicos: 'clinicians',
+      recursos: 'resources',
+    };
+    const alternateSlug =
+      transverse?.slugEn ||
+      (extraIndex >= 0 ? extraEn[extraIndex]?.slug : undefined) ||
+      legacyMap[page.slug] ||
+      'what-is';
+    return {
+      params: { slug: page.slug },
+      props: { titulo: page.title, text: 'text' in page ? page.text : undefined, alternateSlug },
+    };
+  });
+}
+
+interface Props {
+  titulo: string;
+  text?: string;
+  alternateSlug: string;
+}
+const { slug } = Astro.params;
+const { titulo, text, alternateSlug } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const entry = transversePages.find((page) => page.slugEs === slug);
+const printable = slug === 'diario' || slug === 'tarjeta-medica';
+---
+
+<BaseLayout
+  title={titulo}
+  description={`${titulo} en hYglY.`}
+  lang="es"
+  alternatePath={`/${alternateSlug}/`}
+>
+  <nav aria-label="Migas de pan">
+    <a href={`${base}es/`}>Inicio</a> / <span>{titulo}</span>
+  </nav>
+  <h1>{titulo}</h1>
+  {printable && <PrintControls lang="es" />}
+  {text && <p>{text}</p>}
+  {slug === 'diario' && (
+    <section aria-labelledby="diario-title">
+      <h2 id="diario-title">Registro imprimible</h2>
+      <table>
+        <caption>Diario de glucosa y síntomas</caption>
+        <thead>
+          <tr>
+            <th>Fecha y hora</th>
+            <th>Comida o actividad</th>
+            <th>Glucosa</th>
+            <th>Síntomas</th>
+            <th>Acción y recuperación</th>
+          </tr>
+        </thead>
+        <tbody>
+          {Array.from({ length: 8 }).map(() => (
+            <tr>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </section>
+  )}
+  {slug === 'tarjeta-medica' && (
+    <section aria-labelledby="tarjeta-title">
+      <h2 id="tarjeta-title">Datos para imprimir</h2>
+      <table>
+        <caption>Tarjeta médica</caption>
+        <tbody>
+          <tr>
+            <th>Nombre</th>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <th>Diagnóstico confirmado</th>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <th>Medicamentos</th>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <th>Alergias</th>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <th>Contacto de emergencia</th>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <th>Equipo médico</th>
+            <td>&nbsp;</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  )}
+  {entry &&
+    entry.sectionsEs.map((section) => (
+      <section>
+        <h2>{section.title}</h2>
+        <p>{section.text}</p>
+      </section>
+    ))}
+</BaseLayout>

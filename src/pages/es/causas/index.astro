@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { groups } from '../../../data/groups';
+const base = import.meta.env.BASE_URL;
+---
+
+<BaseLayout
+  title="Causas"
+  description="Grupos de causas de hipoglucemia reactiva."
+  lang="es"
+  alternatePath="/causes/"
+>
+  <h1>Causas de hipoglucemia reactiva</h1>
+  <div class="group-grid">
+    {groups.map((group) => (
+      <article class="card">
+        <h2>
+          <a href={`${base}es/causas/${group.id}/`}>{group.es}</a>
+        </h2>
+        <span class="tag">Postprandial / ayuno / ambas</span>
+      </article>
+    ))}
+  </div>
+</BaseLayout>

@@ -1,0 +1,100 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import { phase4Causes } from '../../../../data/phase4-causes';
+import { autoimmuneCauses } from '../../../../data/autoimmune-causes';
+import { endocrineCauses } from '../../../../data/endocrine-causes';
+import { metabolicCauses } from '../../../../data/metabolic-causes';
+import { tumorCauses } from '../../../../data/tumor-causes';
+import { drugCauses } from '../../../../data/drug-causes';
+import { otherCauses } from '../../../../data/other-causes';
+
+export function getStaticPaths() {
+  const existing = [
+    { params: { cause: 'niphs' }, props: { title: 'NIPHS' } },
+    { params: { cause: 'post-bariatrica' }, props: { title: 'Post-bariatric hypoglycemia' } },
+    { params: { cause: 'dumping-cirugia-gastrica' }, props: { title: 'Dumping syndrome' } },
+    {
+      params: { cause: 'hiperinsulinismo-genetico-tardio' },
+      props: { title: 'Late-onset genetic hyperinsulinism' },
+    },
+    {
+      params: { cause: 'hiperinsulinismo-post-trasplante' },
+      props: { title: 'Post-transplant hyperinsulinism' },
+    },
+    {
+      params: { cause: 'postprandial-idiopatica' },
+      props: { title: 'Idiopathic postprandial hypoglycemia' },
+    },
+    { params: { cause: 'funcional' }, props: { title: 'Functional hypoglycemia' } },
+    {
+      params: { cause: 'hipersensibilidad-a-caida-de-glucosa' },
+      props: { title: 'Hypersensitivity to a glucose drop' },
+    },
+  ];
+  const additional = phase4Causes.map((cause) => ({
+    params: { cause: cause.slug },
+    props: { title: cause.en },
+  }));
+  const autoimmune = autoimmuneCauses.map((cause) => ({
+    params: { cause: cause.slug },
+    props: { title: cause.en },
+  }));
+  const endocrine = endocrineCauses.map((cause) => ({
+    params: { cause: cause.slug },
+    props: { title: cause.en },
+  }));
+  const metabolic = metabolicCauses.map((cause) => ({
+    params: { cause: cause.slug },
+    props: { title: cause.en },
+  }));
+  const tumors = tumorCauses.map((cause) => ({
+    params: { cause: cause.slug },
+    props: { title: cause.en },
+  }));
+  const drugs = drugCauses.map((cause) => ({
+    params: { cause: cause.slug },
+    props: { title: cause.en },
+  }));
+  const others = otherCauses.map((cause) => ({
+    params: { cause: cause.slug },
+    props: { title: cause.en },
+  }));
+  return [
+    ...existing,
+    ...additional,
+    ...autoimmune,
+    ...endocrine,
+    ...metabolic,
+    ...tumors,
+    ...drugs,
+    ...others,
+  ];
+}
+
+interface Props {
+  title: string;
+}
+const { cause } = Astro.params;
+const { title } = Astro.props;
+const base = import.meta.env.BASE_URL;
+---
+
+<BaseLayout
+  title={title}
+  description={`Information about ${title}.`}
+  lang="en"
+  alternatePath={`/causas/${cause}/`}
+>
+  <nav aria-label="Breadcrumb">
+    <a href={`${base}en/`}>Home</a> /<a href={`${base}en/causes/`}>Causes</a> /{title}
+  </nav>
+  <h1>{title}</h1>
+  <aside class="emergency" role="note">
+    Type of hypoglycemia produced most often:
+    {cause === 'niphs' ? ' both.' : ' postprandial.'}
+  </aside>
+  <section class="audience-actions" aria-label="Select an audience">
+    <a href={`${base}en/causes/${cause}/patient/`}>I am a patient</a>
+    <a href={`${base}en/causes/${cause}/clinician/`}>I am a clinician</a>
+  </section>
+</BaseLayout>

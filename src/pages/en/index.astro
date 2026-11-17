@@ -1,0 +1,66 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { groups } from '../../data/groups';
+const base = import.meta.env.BASE_URL;
+---
+
+<BaseLayout
+  title="Home"
+  description="Database about postprandial reactive hypoglycemia."
+  lang="en"
+  alternatePath="/"
+>
+  <section class="hero">
+    <h1>Clear information about reactive hypoglycemia</h1>
+    <p>Explore causes by mechanism and find resources for patients and health professionals.</p>
+  </section>
+  <div class="emergency" role="alert">
+    <strong>
+      If you have severe symptoms, confusion or loss of consciousness, call emergency services.
+    </strong>
+  </div>
+  <section class="audience-actions" aria-label="Choose your profile">
+    <a href={`${base}en/patients/`}>I am a patient</a>
+    <a href={`${base}en/clinicians/`}>I am a clinician</a>
+  </section>
+  <form class="search-form" action={`${base}en/search/`} role="search">
+    <label for="site-search-en" class="sr-only">
+      Search hYglY
+    </label>
+    <input id="site-search-en" name="q" type="search" placeholder="Search causes or topics" />
+    <button type="submit">Search</button>
+  </form>
+  <section aria-labelledby="quick-title">
+    <h2 id="quick-title">Quick access</h2>
+    <div class="quick-links">
+      <a class="card" href={`${base}en/acute-episode/`}>
+        <strong>Acute episode</strong>
+      </a>
+      <a class="card" href={`${base}en/diagnosis/`}>
+        <strong>How it is diagnosed</strong>
+      </a>
+      <a class="card" href={`${base}en/glossary/`}>
+        <strong>Glossary</strong>
+      </a>
+      <a class="card" href={`${base}en/glucose-symptom-diary/`}>
+        <strong>Printable diary</strong>
+      </a>
+    </div>
+  </section>
+  <section aria-labelledby="causes-title">
+    <h2 id="causes-title">Causes by group</h2>
+    <div class="group-grid">
+      {groups.map((group) => (
+        <article class="card">
+          <h3>
+            <a href={`${base}en/causes/${group.id}/`}>{group.en}</a>
+          </h3>
+          <span class="tag">Postprandial / fasting / both</span>
+        </article>
+      ))}
+    </div>
+  </section>
+  <p>
+    <small>Last site update: November 17, 2026</small>
+  </p>
+</BaseLayout>

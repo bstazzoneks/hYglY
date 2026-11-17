@@ -1,0 +1,17 @@
+{
+  "defaults": {
+    "standard": "WCAG2AA",
+    "timeout": 30000,
+    "chromeLaunchConfig": {
+      "args": ["--no-sandbox", "--disable-setuid-sandbox"]
+    }
+  },
+  "urls": [
+    "http://127.0.0.1:4321/es/",
+    "http://127.0.0.1:4321/en/",
+    "http://127.0.0.1:4321/es/causas/niphs/paciente/",
+    "http://127.0.0.1:4321/en/causes/niphs/clinician/",
+    "http://127.0.0.1:4321/es/diario/",
+    "http://127.0.0.1:4321/en/medical-card/"
+  ]
+}

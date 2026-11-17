@@ -1,0 +1,25 @@
+name: Corrección de contenido médico
+description: Proponer una corrección en una ficha de hYglY
+title: 'Corrección: '
+labels: ['content', 'needs-medical-review']
+body:
+  - type: input
+    id: page
+    attributes:
+      label: Página afectada
+      placeholder: /es/causas/niphs/paciente/
+    validations:
+      required: true
+  - type: textarea
+    id: correction
+    attributes:
+      label: Corrección propuesta
+    validations:
+      required: true
+  - type: textarea
+    id: source
+    attributes:
+      label: Fuente confiable
+      description: Incluya título, URL, DOI o PMID.
+    validations:
+      required: true

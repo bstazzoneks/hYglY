@@ -1,0 +1,106 @@
+---
+interface Props {
+  lang: 'es' | 'en';
+  alternatePath?: string;
+}
+const { lang, alternatePath = '/' } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const alternate = `${base}${lang === 'es' ? 'en' : 'es'}${alternatePath}`;
+const labels =
+  lang === 'es'
+    ? {
+        patient: 'Pacientes',
+        medical: 'Médicos',
+        causes: 'Causas',
+        diagnosis: 'Diagnóstico',
+        acute: 'Episodio agudo',
+        resources: 'Recursos',
+        search: 'Buscar',
+      }
+    : {
+        patient: 'Patients',
+        medical: 'Clinicians',
+        causes: 'Causes',
+        diagnosis: 'Diagnosis',
+        acute: 'Acute episode',
+        resources: 'Resources',
+        search: 'Search',
+      };
+const routes =
+  lang === 'es'
+    ? {
+        patient: 'pacientes',
+        medical: 'medicos',
+        causes: 'causas',
+        diagnosis: 'diagnostico',
+        acute: 'episodio-agudo',
+        resources: 'recursos',
+        search: 'buscar',
+      }
+    : {
+        patient: 'patients',
+        medical: 'clinicians',
+        causes: 'causes',
+        diagnosis: 'diagnosis',
+        acute: 'acute-episode',
+        resources: 'resources',
+        search: 'search',
+      };
+---
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href={`${base}${lang}/`} aria-label="hYglY">
+      <span class="brand-name">hYglY</span>
+      <span class="brand-subtitle">
+        {lang === 'es'
+          ? 'Base de datos de hipoglucemia reactiva'
+          : 'Reactive hypoglycemia database'}
+      </span>
+    </a>
+    <nav class="language-nav" aria-label={lang === 'es' ? 'Idioma' : 'Language'}>
+      <a href={alternate} hreflang={lang === 'es' ? 'en' : 'es'} aria-current={undefined}>
+        {lang === 'es' ? 'EN' : 'ES'}
+      </a>
+      <span aria-hidden="true">|</span>
+      <span aria-current="page">{lang.toUpperCase()}</span>
+    </nav>
+  </div>
+  <nav class="main-nav" aria-label={lang === 'es' ? 'Navegación principal' : 'Primary navigation'}>
+    <a href={`${base}${lang}/${routes.patient}/`}>{labels.patient}</a>
+    <a href={`${base}${lang}/${routes.medical}/`}>{labels.medical}</a>
+    <a href={`${base}${lang}/${routes.causes}/`}>{labels.causes}</a>
+    <a href={`${base}${lang}/${routes.diagnosis}/`}>{labels.diagnosis}</a>
+    <a href={`${base}${lang}/${routes.acute}/`}>{labels.acute}</a>
+    <a href={`${base}${lang}/${routes.resources}/`}>{labels.resources}</a>
+    <a href={`${base}${lang}/${routes.search}/`}>{labels.search}</a>
+  </nav>
+  <div
+    class="display-controls"
+    aria-label={lang === 'es' ? 'Preferencias de visualización' : 'Display preferences'}
+  >
+    <button type="button" data-theme-toggle>
+      {lang === 'es' ? 'Modo oscuro' : 'Dark mode'}
+    </button>
+    <button type="button" data-text-increase>
+      {lang === 'es' ? 'Aumentar texto' : 'Increase text'}
+    </button>
+  </div>
+</header>
+<script is:inline>
+  const root = document.documentElement;
+  const savedTheme = localStorage.getItem('hygly-theme');
+  const savedSize = localStorage.getItem('hygly-text-size');
+  if (savedTheme === 'dark') root.dataset.theme = 'dark';
+  if (savedSize) root.style.setProperty('--text-scale', savedSize);
+  document.querySelector('[data-theme-toggle]')?.addEventListener('click', () => {
+    root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    localStorage.setItem('hygly-theme', root.dataset.theme);
+  });
+  document.querySelector('[data-text-increase]')?.addEventListener('click', () => {
+    const current = Number.parseFloat(getComputedStyle(root).getPropertyValue('--text-scale')) || 1;
+    const next = current >= 1.2 ? 1 : Math.round((current + 0.1) * 10) / 10;
+    root.style.setProperty('--text-scale', String(next));
+    localStorage.setItem('hygly-text-size', String(next));
+  });
+</script>
